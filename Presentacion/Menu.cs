@@ -89,7 +89,7 @@ namespace Presentacion
         {
             Console.Clear();
 
-            Console.WriteLine();
+            Console.WriteLine("REGISTRO");
 
             Console.Write("Digite nro liquidación: ");
             int NroLiquidacion = int.Parse(Console.ReadLine());
@@ -139,7 +139,30 @@ namespace Presentacion
 
         private void BuscarPorNombre()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+
+            Console.WriteLine("BUSQUEDA POR NOMBRE");
+
+            Console.WriteLine();
+
+            Console.Write("Digite un nombre: ");
+
+            Console.WriteLine();
+
+            if (personaList == null)
+            {
+                Console.WriteLine("Archivo sin datos.");
+                Console.ReadKey();
+                return;
+            }
+            foreach (var item in personaList)
+            {
+                Console.WriteLine("Nombre -- Id paciente -- Sexo -- Edad -- Pulsación");
+                Console.WriteLine();
+                Console.WriteLine($"{item.Nombre} -- {item.IdPaciente} -- {item.Sexo} -- {item.Edad} -- {item.Pulsacion}");
+            }
+
+            Console.ReadKey();
         }
 
         private void EliminarLiquidacion()

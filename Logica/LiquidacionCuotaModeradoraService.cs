@@ -8,6 +8,9 @@ namespace Logica
 {
     public class LiquidacionCuotaModeradoraService
     {
-
+        public List<Persona> FiltrarPersonasPorNombre(string filtro)
+        {
+            return repositorio.ObtenerPersonasPorFiltro(filtro);
+        }
     }
 }
