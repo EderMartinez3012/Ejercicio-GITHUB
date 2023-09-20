@@ -49,7 +49,7 @@ namespace Datos
 
             paciente.IdPaciente = int.Parse(datos[0]);
             paciente.Nombre = datos[1];
-            paciente.Nro
+            paciente.
         }
     }
 }

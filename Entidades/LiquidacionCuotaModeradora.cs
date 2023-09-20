@@ -9,15 +9,17 @@ namespace Entidades
     public class LiquidacionCuotaModeradora : Paciente
     {
         public int NroLiquidacion { get; set; }
+        public DateTime FechaLiquidacion { get; set; }
         public string TipoAfiliacion { get; set; }
         public int NroSalarios { get; set; }
         public int ValorServicio { get; set; }
 
-        public LiquidacionCuotaModeradora(int idpaciente, string nombre, int nroliquidacion, string tipoafiliacion, int nrosalarios, int valorservicio) 
+        public LiquidacionCuotaModeradora(int idpaciente, string nombre, int nroliquidacion, string tipoafiliacion, DateTime fechaliquidacion, int nrosalarios, int valorservicio) 
         {
             IdPaciente = idpaciente;
             Nombre = nombre;
             NroLiquidacion = nroliquidacion;
+            FechaLiquidacion = fechaliquidacion
             TipoAfiliacion = tipoafiliacion;
             NroSalarios = nrosalarios;
             ValorServicio = valorservicio;
@@ -25,7 +27,7 @@ namespace Entidades
 
         public override string ToString()
         {
-            return $"{IdPaciente};{Nombre};{NroLiquidacion};{TipoAfiliacion};{NroSalarios};{ValorServicio}";
+            return $"{IdPaciente};{Nombre};{NroLiquidacion};{FechaLiquidacion};{TipoAfiliacion};{NroSalarios};{ValorServicio}";
         }
     }
 }
