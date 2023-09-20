@@ -31,17 +31,125 @@ namespace Presentacion
 
                 Console.WriteLine();
 
-                Console.WriteLine("4. ");
+                Console.WriteLine("4. Busqueda por valor de cuotas moderadas");
 
                 Console.WriteLine();
 
-                Console.WriteLine("2. ");
+                Console.WriteLine("5. Busqueda por liquidaciones");
 
                 Console.WriteLine();
 
-                Console.WriteLine("2. ");
+                Console.WriteLine("6. Busqueda por nombre");
 
-            } while (op != 7);
+                Console.WriteLine();
+
+                Console.WriteLine("7. Eliminar liquidación");
+
+                Console.WriteLine();
+
+                Console.WriteLine("8. Modificar valor del servicio");
+
+                Console.Write("Digite una opción: ");
+                op = int.Parse(Console.ReadLine());
+
+                switch (op)
+                {
+                    case 1: Registrar();
+                        break;
+
+                    case 2: Listado();
+                        break;
+
+                    case 3: BuscarPorAfiliacion();
+                        break;
+
+                    case 4: BuscarPorCuotas();
+                        break;
+
+                    case 5: BuscarPorLiquidaciones();
+                        break;
+
+                    case 6: BuscarPorNombre();
+                        break;
+
+                    case 7: EliminarLiquidacion();
+                        break;
+
+                    case 8: ModificarValorServicio();
+                        break;
+
+                    default:
+                        break;
+                }
+
+            } while (op != 9);
+        }
+
+        private void Registrar()
+        {
+            Console.Clear();
+
+            Console.WriteLine();
+
+            Console.Write("Digite nro liquidación: ");
+            int NroLiquidacion = int.Parse(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Console.Write("Digite id paciente: ");
+            int IdPaciente = int.Parse(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Console.Write("Digite tipo de afiliación: ");
+            string TipoAfiliacion = Console.ReadLine();
+
+            Console.WriteLine();
+
+            Console.Write("Digite el nro salarios: ");
+            int NroSalario = int.Parse(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Console.Write("Digite el valor de servicio hospitalario: ");
+            int ValorServicio = int.Parse(Console.ReadLine());
+
+            Console.ReadKey();
+        }
+
+        private void Listado()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BuscarPorAfiliacion()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BuscarPorCuotas()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BuscarPorLiquidaciones()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BuscarPorNombre()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EliminarLiquidacion()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ModificarValorServicio()
+        {
+            throw new NotImplementedException();
         }
     }
 }
