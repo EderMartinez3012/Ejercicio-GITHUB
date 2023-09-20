@@ -8,6 +8,7 @@ namespace Entidades
 {
     public class Paciente
     {
+        public int IdPaciente { get; set; }
         public string Nombre { get; set; }
 
     }
