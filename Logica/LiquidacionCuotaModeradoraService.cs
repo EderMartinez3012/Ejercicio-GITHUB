@@ -64,11 +64,6 @@ namespace Logica
         {
             return liquidacionCuotaModeradoraList;
         }
-        public int Ganancias(object ganancia, int valoringreso, int valorgastos)
-        {
-            int Ganancias = valoringreso - valorgastos;
-            return Ganancias;
-        }
         public void RegContributivo()
         {
             //Console.Write("Ingrese el Nro de salario del paciente");
