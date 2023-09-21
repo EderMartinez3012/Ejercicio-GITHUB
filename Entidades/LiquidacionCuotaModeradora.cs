@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades
+namespace Entity
 {
     public class LiquidacionCuotaModeradora : Paciente
     {
@@ -14,15 +14,25 @@ namespace Entidades
         public int NroSalarios { get; set; }
         public int ValorServicio { get; set; }
 
-        public LiquidacionCuotaModeradora(int idpaciente, string nombre, int nroliquidacion, string tipoafiliacion, DateTime fechaliquidacion, int nrosalarios, int valorservicio) 
+        public double CuotaModeladora = 0;
+        public double Tarifa = 0;
+        public LiquidacionCuotaModeradora()
         {
-            IdPaciente = idpaciente;
+        }
+
+        public LiquidacionCuotaModeradora(int idPaciente, string nombre, int nroLiquidacion, DateTime fechaLiquidacion, string tipoAfiliacion, int nroSalarios, int valorServicio)
+        {
+            IdPaciente = idPaciente;
             Nombre = nombre;
-            NroLiquidacion = nroliquidacion;
-            FechaLiquidacion = fechaliquidacion
-            TipoAfiliacion = tipoafiliacion;
-            NroSalarios = nrosalarios;
-            ValorServicio = valorservicio;
+            NroLiquidacion = nroLiquidacion;
+            FechaLiquidacion = fechaLiquidacion;
+            TipoAfiliacion = tipoAfiliacion;
+            NroSalarios = nroSalarios;
+            ValorServicio = valorServicio;
+        }
+
+        public LiquidacionCuotaModeradora(int idPaciente, string nombre, int nroLiquidacion, string tipoAfiliacion, int nroSalarios, int valorServicio) : base(idPaciente, nombre)
+        {
         }
 
         public override string ToString()
