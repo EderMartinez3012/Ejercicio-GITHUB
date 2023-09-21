@@ -101,7 +101,16 @@ namespace Presentacion
 
             Console.WriteLine();
 
-            Console.Write("Digite tipo de afiliación: ");
+            Console.Write("Digite el nombre: ");
+            string Nombre = Console.ReadLine();
+
+            Console.WriteLine();
+
+            Console.Write("Digite la fecha de liquidación (dd-mm-yyyy): ");
+
+            Console.WriteLine();
+
+            Console.Write("Digite tipo de afiliación (contributivo o subsidiado): ");
             string TipoAfiliacion = Console.ReadLine();
 
             Console.WriteLine();
@@ -149,18 +158,18 @@ namespace Presentacion
 
             Console.WriteLine();
 
-            if (personaList == null)
-            {
-                Console.WriteLine("Archivo sin datos.");
-                Console.ReadKey();
-                return;
-            }
-            foreach (var item in personaList)
-            {
-                Console.WriteLine("Nombre -- Id paciente -- Sexo -- Edad -- Pulsación");
-                Console.WriteLine();
-                Console.WriteLine($"{item.Nombre} -- {item.IdPaciente} -- {item.Sexo} -- {item.Edad} -- {item.Pulsacion}");
-            }
+            //if (personaList == null)
+            //{
+            //    Console.WriteLine("Archivo sin datos.");
+            //    Console.ReadKey();
+            //    return;
+            //}
+            //foreach (var item in personaList)
+            //{
+            //    Console.WriteLine("Nombre -- Id paciente -- Sexo -- Edad -- Pulsación");
+            //    Console.WriteLine();
+            //    Console.WriteLine($"{item.Nombre} -- {item.IdPaciente} -- {item.Sexo} -- {item.Edad} -- {item.Pulsacion}");
+            //}
 
             Console.ReadKey();
         }
