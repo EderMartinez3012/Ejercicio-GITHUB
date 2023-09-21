@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UPC__;
 
 namespace Presentacion
 {
@@ -10,8 +11,17 @@ namespace Presentacion
     {
         static void Main(string[] args)
         {
-            var Menu = new Menu();
-            Menu.MenuPrincipal();
+            var liquidacionGUI = new LiquidacionGUI();
+            liquidacionGUI.Menu();
+            Despedida();
+        }
+
+        private static void Despedida()
+        {
+            Console.Clear();
+            Console.WriteLine("gracias por usar productos JOHNP");
+            Console.ReadKey();
+
         }
     }
 }

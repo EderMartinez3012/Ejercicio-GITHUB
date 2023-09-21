@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{48508EBE-5C55-4B4B-B494-7B8D53AFC147}</ProjectGuid>
+    <ProjectGuid>{56191577-CF48-4CEE-AEB4-D1128A56A082}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Presentacion</RootNamespace>
-    <AssemblyName>Presentacion</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <RootNamespace>UPC__</RootNamespace>
+    <AssemblyName>UPC__</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu.cs" />
+    <Compile Include="LiquidacionGUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,13 +51,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entidades\Entidades.csproj">
-      <Project>{52a8c09e-61af-4f83-9b5f-19876cf56196}</Project>
-      <Name>Entidades</Name>
+    <ProjectReference Include="..\BDD\DAL.csproj">
+      <Project>{ca7f2f32-d13a-4d47-b9c1-c06484fc1705}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logica\Logica.csproj">
-      <Project>{0e6fb510-6ea3-4267-bcb2-5584eaf671b0}</Project>
-      <Name>Logica</Name>
+    <ProjectReference Include="..\DLL\BLL.csproj">
+      <Project>{6a9dbd8c-4ef8-4967-a33e-46b1d75f3c39}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{95cc4c93-5691-4c55-80a4-ef28f78a249f}</Project>
+      <Name>Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
