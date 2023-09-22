@@ -21,7 +21,7 @@ namespace BDD
             //3 cerrar el flujo
             escritor.Close();
 
-            return $"se agrego la liquidacion {liquidacionCuotaModeradora.NroLiquidacion}";
+            return $"Se agrego la liquidacion {liquidacionCuotaModeradora.NroLiquidacion}";
         }
         public List<LiquidacionCuotaModeradora> ConsultarTodoLiquidacion()
         {
@@ -49,7 +49,7 @@ namespace BDD
             liquidacionCuotaModeradora.IdPaciente = int.Parse(linea.Split(';')[0]);
             liquidacionCuotaModeradora.Nombre = linea.Split(';')[1];
             liquidacionCuotaModeradora.NroLiquidacion = int.Parse(linea.Split(';')[2]);
-            //liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(linea.Split(';')[3]);
+            liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(linea.Split(';')[3]);
             liquidacionCuotaModeradora.TipoAfiliacion = linea.Split(';')[4];
             liquidacionCuotaModeradora.NroSalarios = int.Parse(linea.Split(';')[5]);
             liquidacionCuotaModeradora.ValorServicio = int.Parse(linea.Split(';')[6]);
@@ -64,7 +64,7 @@ namespace BDD
             liquidacionCuotaModeradora.Nombre = datos[1];
             liquidacionCuotaModeradora.NroLiquidacion = int.Parse(datos[2]);
             liquidacionCuotaModeradora.TipoAfiliacion = datos[3];
-            //liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(datos[4]);
+            liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(datos[4]);
             liquidacionCuotaModeradora.NroSalarios = int.Parse(datos[5]);
             liquidacionCuotaModeradora.ValorServicio = int.Parse(datos[6]);
             return liquidacionCuotaModeradora;
