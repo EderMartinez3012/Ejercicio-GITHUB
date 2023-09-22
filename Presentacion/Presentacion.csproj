@@ -59,9 +59,17 @@
       <Project>{6a9dbd8c-4ef8-4967-a33e-46b1d75f3c39}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{52a8c09e-61af-4f83-9b5f-19876cf56196}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entity\Entity.csproj">
       <Project>{95cc4c93-5691-4c55-80a4-ef28f78a249f}</Project>
       <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logica\Logica.csproj">
+      <Project>{0e6fb510-6ea3-4267-bcb2-5584eaf671b0}</Project>
+      <Name>Logica</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
