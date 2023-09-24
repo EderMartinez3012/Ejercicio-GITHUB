@@ -14,6 +14,8 @@ namespace Entity
         public int NroSalarios { get; set; }
         public int ValorServicio { get; set; }
 
+        public int NuevoValorServicio { get; set; }
+
         public double CuotaModeladora = 0;
         public double Tarifa = 0;
         public LiquidacionCuotaModeradora()
@@ -29,6 +31,7 @@ namespace Entity
             TipoAfiliacion = tipoAfiliacion;
             NroSalarios = nroSalarios;
             ValorServicio = valorServicio;
+            NuevoValorServicio = NuevoValorServicio;
         }
 
         public LiquidacionCuotaModeradora(int idPaciente, string nombre, int nroLiquidacion, string tipoAfiliacion, int nroSalarios, int valorServicio) : base(idPaciente, nombre)
