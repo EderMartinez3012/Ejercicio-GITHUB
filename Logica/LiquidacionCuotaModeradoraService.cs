@@ -35,40 +35,41 @@ namespace DLL
             return msg;
         }
 
-        public decimal CalcularCuotaModeradora(string tipoAfiliacion, decimal salarioDevengado, decimal valorServicio)
+        public decimal CalcularCuotaModeradora(LiquidacionCuotaModeradora liquidacion)
         {
             decimal cuotaModeradora = 0;
 
-            if (tipoAfiliacion == "Contributivo")
+            if (liquidacion.TipoAfiliacion == "Contributivo")
             {
-                if (salarioDevengado < 2)
+                if (liquidacion.NroSalarios < 2 * SalarioMinimo)
                 {
-                    cuotaModeradora = valorServicio * 0.15m;
-                    if (cuotaModeradora > 250000)
-                        cuotaModeradora = 250000;
+                    cuotaModeradora = liquidacion.ValorServicio * 0.15m;
+                    cuotaModeradora = Math.Min(cuotaModeradora, TopeMaximoContributivo);
                 }
-                else if (salarioDevengado >= 2 && salarioDevengado <= 5)
+                else if (liquidacion.NroSalarios >= 2 * SalarioMinimo && liquidacion.NroSalarios <= 5 * SalarioMinimo)
                 {
-                    cuotaModeradora = valorServicio * 0.20m;
-                    if (cuotaModeradora > 900000)
-                        cuotaModeradora = 900000;
+                    cuotaModeradora = liquidacion.ValorServicio * 0.20m;
+                    cuotaModeradora = Math.Min(cuotaModeradora, TopeMaximoContributivo);
                 }
-                else if (salarioDevengado > 5)
+                else
                 {
-                    cuotaModeradora = valorServicio * 0.25m;
-                    if (cuotaModeradora > 1500000)
-                        cuotaModeradora = 1500000;
+                    cuotaModeradora = liquidacion.ValorServicio * 0.25m;
+                    cuotaModeradora = Math.Min(cuotaModeradora, TopeMaximoContributivo);
                 }
             }
-            else if (tipoAfiliacion == "Subsidiado")
+            else if (liquidacion.TipoAfiliacion == "Subsidiado")
             {
-                cuotaModeradora = valorServicio * 0.05m;
-                if (cuotaModeradora > 200000)
-                    cuotaModeradora = 200000;
+                cuotaModeradora = liquidacion.ValorServicio * 0.05m;
+                cuotaModeradora = Math.Min(cuotaModeradora, TopeMaximoSubsidiado);
             }
 
+            liquidacion.CuotaModeladora = cuotaModeradora;
             return cuotaModeradora;
         }
+
+        private const decimal SalarioMinimo = 1000000; // Ejemplo de salario mínimo
+        private const decimal TopeMaximoContributivo = 1500000;
+        private const decimal TopeMaximoSubsidiado = 200000;
         public LiquidacionCuotaModeradora BuscarID(int id)
         {
             try
@@ -96,6 +97,103 @@ namespace DLL
         {
             return liquidacionCuotaModeradoraList;
         }
+
+        public Dictionary<string, int> TotalizarLiquidacionesPorAfiliacion()
+        {
+            Dictionary<string, int> totalLiquidacionesPorAfiliacion = new Dictionary<string, int>();
+
+            List<LiquidacionCuotaModeradora> liquidaciones = repositorio.ConsultarTodoLiquidacion();
+
+            foreach (LiquidacionCuotaModeradora liquidacion in liquidaciones)
+            {
+                string tipoAfiliacion = liquidacion.TipoAfiliacion;
+
+                if (totalLiquidacionesPorAfiliacion.ContainsKey(tipoAfiliacion))
+                {
+                    totalLiquidacionesPorAfiliacion[tipoAfiliacion]++;
+                }
+                else
+                {
+                    totalLiquidacionesPorAfiliacion[tipoAfiliacion] = 1;
+                }
+            }
+
+            return totalLiquidacionesPorAfiliacion;
+        }
+
+        public Dictionary<string, decimal> CalcularValorTotalCuotasPorAfiliacion()
+        {
+            Dictionary<string, decimal> valorTotalCuotasPorAfiliacion = new Dictionary<string, decimal>();
+
+            List<LiquidacionCuotaModeradora> liquidaciones = repositorio.ConsultarTodoLiquidacion();
+
+            foreach (LiquidacionCuotaModeradora liquidacion in liquidaciones)
+            {
+                string tipoAfiliacion = liquidacion.TipoAfiliacion;
+                decimal cuotaModeradora = liquidacion.CuotaModeladora;
+
+                if (valorTotalCuotasPorAfiliacion.ContainsKey(tipoAfiliacion))
+                {
+                    valorTotalCuotasPorAfiliacion[tipoAfiliacion] += cuotaModeradora;
+                }
+                else
+                {
+                    valorTotalCuotasPorAfiliacion[tipoAfiliacion] = cuotaModeradora;
+                }
+            }
+
+            return valorTotalCuotasPorAfiliacion;
+        }
+
+        public Dictionary<string, decimal> CalcularValorTotalCuotasPorAfiliacionEnFecha(int year, int month)
+        {
+            Dictionary<string, decimal> valorTotalCuotasPorAfiliacion = new Dictionary<string, decimal>();
+
+            List<LiquidacionCuotaModeradora> liquidaciones = repositorio.ConsultarTodoLiquidacion();
+
+            foreach (LiquidacionCuotaModeradora liquidacion in liquidaciones)
+            {
+                if (liquidacion.FechaLiquidacion.Year == year && liquidacion.FechaLiquidacion.Month == month)
+                {
+                    string tipoAfiliacion = liquidacion.TipoAfiliacion;
+                    decimal cuotaModeradora = liquidacion.CuotaModeradora;
+
+                    if (valorTotalCuotasPorAfiliacion.ContainsKey(tipoAfiliacion))
+                    {
+                        valorTotalCuotasPorAfiliacion[tipoAfiliacion] += cuotaModeradora;
+                    }
+                    else
+                    {
+                        valorTotalCuotasPorAfiliacion[tipoAfiliacion] = cuotaModeradora;
+                    }
+                }
+            }
+
+            return valorTotalCuotasPorAfiliacion;
+        }
+
+        public LiquidacionCuotaModeradora BuscarPorNombre(string nombre)
+        {
+            try
+            {
+                if (liquidacionCuotaModeradoraList == null)
+                {
+                    return null;
+                }
+                foreach (var item in liquidacionCuotaModeradoraList)
+                {
+                    if (nombre == item.Nombre)
+                    {
+                        return item;
+                    }
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         public void RegContributivo()
         {
             //Console.Write("Ingrese el Nro de salario del paciente");
@@ -117,23 +215,33 @@ namespace DLL
             //CuotaModeladora = ValorServicio * Tarifa;
         }
 
+        public void ModificarValorServicioHospitalizacion(int numeroLiquidacion, decimal nuevoValorServicio)
+        {
+            repositorio.ModificarValorServicioHospitalizacion(numeroLiquidacion, nuevoValorServicio);
+        }
+
         public void EliminarLiquidacionPorNumero(int numeroLiquidacion)
         {
-            List<LiquidacionCuotaModeradora> liquidaciones = repositorio.ConsultarTodoLiquidacion();
-
-            // Buscar la liquidación por número de liquidación y eliminarla
-            LiquidacionCuotaModeradora liquidacionAEliminar = liquidaciones.FirstOrDefault(l => l.NroLiquidacion == numeroLiquidacion);
-
-            if (liquidacionAEliminar != null)
-            {
-                liquidaciones.Remove(liquidacionAEliminar);
-                repositorio.Guardar(liquidacionCuotaModeradora); // Guardar la lista actualizada en el archivo de texto
-            }
-            else
-            {
-                Console.WriteLine("No se encontró una liquidación con el número especificado.");
-            }
+            repositorio.EliminarLiquidacionPorNumero(numeroLiquidacion);
         }
+
+        //public void EliminarLiquidacionPorNumero(int numeroLiquidacion)
+        //{
+        //    List<LiquidacionCuotaModeradora> liquidaciones = repositorio.ConsultarTodoLiquidacion();
+
+        //    // Buscar la liquidación por número de liquidación y eliminarla
+        //    LiquidacionCuotaModeradora liquidacionAEliminar = liquidaciones.FirstOrDefault(l => l.NroLiquidacion == numeroLiquidacion);
+
+        //    if (liquidacionAEliminar != null)
+        //    {
+        //        liquidaciones.Remove(liquidacionAEliminar);
+        //        repositorio.Guardar(liquidacionCuotaModeradora); // Guardar la lista actualizada en el archivo de texto
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("No se encontró una liquidación con el número especificado.");
+        //    }
+        //}
 
     }
 }

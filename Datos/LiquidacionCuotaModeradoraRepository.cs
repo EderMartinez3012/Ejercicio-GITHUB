@@ -43,18 +43,18 @@ namespace BDD
             }
 
         }
-        LiquidacionCuotaModeradora Map(string linea)
-        {
-            var liquidacionCuotaModeradora = new LiquidacionCuotaModeradora();
-            liquidacionCuotaModeradora.IdPaciente = int.Parse(linea.Split(';')[0]);
-            liquidacionCuotaModeradora.Nombre = linea.Split(';')[1];
-            liquidacionCuotaModeradora.NroLiquidacion = int.Parse(linea.Split(';')[2]);
-            liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(linea.Split(';')[3]);
-            liquidacionCuotaModeradora.TipoAfiliacion = linea.Split(';')[4];
-            liquidacionCuotaModeradora.NroSalarios = int.Parse(linea.Split(';')[5]);
-            liquidacionCuotaModeradora.ValorServicio = int.Parse(linea.Split(';')[6]);
-            return liquidacionCuotaModeradora;
-        }
+        //LiquidacionCuotaModeradora Map(string linea)
+        //{
+        //    var liquidacionCuotaModeradora = new LiquidacionCuotaModeradora();
+        //    liquidacionCuotaModeradora.IdPaciente = int.Parse(linea.Split(';')[0]);
+        //    liquidacionCuotaModeradora.Nombre = linea.Split(';')[1];
+        //    liquidacionCuotaModeradora.NroLiquidacion = int.Parse(linea.Split(';')[2]);
+        //    liquidacionCuotaModeradora.FechaLiquidacion = DateTime.Parse(linea.Split(';')[3]);
+        //    liquidacionCuotaModeradora.TipoAfiliacion = linea.Split(';')[4];
+        //    liquidacionCuotaModeradora.NroSalarios = int.Parse(linea.Split(';')[5]);
+        //    liquidacionCuotaModeradora.ValorServicio = int.Parse(linea.Split(';')[6]);
+        //    return liquidacionCuotaModeradora;
+        //}
         LiquidacionCuotaModeradora Map2(string linea)
         {
             var liquidacionCuotaModeradora = new LiquidacionCuotaModeradora();
@@ -69,5 +69,41 @@ namespace BDD
             liquidacionCuotaModeradora.ValorServicio = int.Parse(datos[6]);
             return liquidacionCuotaModeradora;
         }
+
+        public void ModificarValorServicioHospitalizacion(int numeroLiquidacion, decimal nuevoValorServicio)
+        {
+            List<LiquidacionCuotaModeradora> liquidaciones = ConsultarTodoLiquidacion();
+            LiquidacionCuotaModeradora liquidacionAModificar = liquidaciones.FirstOrDefault(l => l.NroLiquidacion == numeroLiquidacion);
+
+            if (liquidacionAModificar != null)
+            {
+                liquidacionAModificar.ValorServicio = (int)nuevoValorServicio;
+
+                // Luego, recalcular la cuota moderadora para la liquidación modificada.
+                CalcularCuotaModeradora(liquidacionAModificar);
+
+                // Guarda la lista actualizada en el archivo de texto o en el repositorio de datos.
+                // Implementa la lógica de escritura de archivos o almacenamiento en base de datos aquí.
+            }
+        }
+
+        public void EliminarLiquidacionPorNumero(int numeroLiquidacion)
+        {
+            List<LiquidacionCuotaModeradora> liquidaciones = ConsultarTodoLiquidacion();
+            LiquidacionCuotaModeradora liquidacionAEliminar = liquidaciones.FirstOrDefault(l => l.NroLiquidacion == numeroLiquidacion);
+
+            if (liquidacionAEliminar != null)
+            {
+                liquidaciones.Remove(liquidacionAEliminar);
+            }
+        }
+
+
+        //public void Eliminar(int NroLiquidacion)
+        //{
+        //    var tasks = ConsultarTodoLiquidacion();
+        //    var updatedTasks = tasks.Where(task => task.Id != taskId).ToList();
+        //    File.WriteAllLines(filePath, updatedTasks.Select(task => $"{task.Id},{task.Description}"));
+        //}
     }
 }

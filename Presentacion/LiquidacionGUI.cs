@@ -19,11 +19,13 @@ namespace UPC__
                 Console.Clear();
                 Console.SetCursorPosition(20, 2); Console.WriteLine("MENU PRINCIPAL");
                 Console.SetCursorPosition(10, 5); Console.WriteLine("1. Agregar Paciente");
-                Console.SetCursorPosition(10, 7); Console.WriteLine("2. Mostrar Paciente");
-                Console.SetCursorPosition(10, 9); Console.WriteLine("3. Actualizar servicio");
-                Console.SetCursorPosition(10, 11); Console.WriteLine("4. Eliminar Liquidacion por ID");
-                Console.SetCursorPosition(10, 13); Console.WriteLine("5. BUscar Paciente por ID");
+                Console.SetCursorPosition(10, 7); Console.WriteLine("2. Mostrar Listado");
+                Console.SetCursorPosition(10, 9); Console.WriteLine("3. Buscar por Afiliación");
+                Console.SetCursorPosition(10, 11); Console.WriteLine("4. Total de Cuotas Moderadas");
+                Console.SetCursorPosition(10, 13); Console.WriteLine("5. Buscar por Fecha de Liquidación");
                 Console.SetCursorPosition(10, 15); Console.WriteLine("6. Buscar Paciente por Nombre");
+                Console.SetCursorPosition(10, 17); Console.WriteLine("7. Eliminar Liquidación");
+                Console.SetCursorPosition(10, 17); Console.WriteLine("8. Actualizar Servicio");
                 Console.SetCursorPosition(10, 23); Console.WriteLine("9. Salir");
                 Console.SetCursorPosition(20, 23); Console.Write("Seleccione una opción:");
                 op = int.Parse(Console.ReadLine());
@@ -39,19 +41,19 @@ namespace UPC__
                     case 3:
                         BuscarPorAfiliacion();
                         break;                    
-                    case 5:
+                    case 4:
                         TotalCuotasModeradas();
                         break;
-                    case 6:
+                    case 5:
                         BuscarPorFechaLiquidaciones();
                         break;
-                    case 7:
+                    case 6:
                         BuscarPorNombre();
                         break;
-                    case 8:
+                    case 7:
                         EliminarLiquidacion();
                         break;
-                    case 9:
+                    case 8:
                         ActualizarServicio();
                         break;
                     default:
@@ -145,7 +147,15 @@ namespace UPC__
             Console.Write("Ingrese el tipo de afiliación (Subsidiado o Contributivo): ");
             string tipoAfiliacion = Console.ReadLine();
 
+            LiquidacionCuotaModeradoraService liquidacionManager = new LiquidacionCuotaModeradoraService();
 
+            Dictionary<string, int> totalLiquidaciones = liquidacionManager.TotalizarLiquidacionesPorAfiliacion();
+
+            Console.WriteLine("Total de Liquidaciones:");
+            foreach (var kvp in totalLiquidaciones)
+            {
+                Console.WriteLine($"{kvp.Key}: {kvp.Value} liquidaciones");
+            }
 
             Console.ReadKey();
         }
@@ -154,12 +164,21 @@ namespace UPC__
         {
             Console.Clear();
 
+            Dictionary<string, decimal> valorTotalCuotasPorAfiliacion = liquidacionCuotaModeradoraService.CalcularValorTotalCuotasPorAfiliacion();
+
+            Console.WriteLine("Valor Total de Cuotas Moderadoras:");
+            foreach (var kvp in valorTotalCuotasPorAfiliacion)
+            {
+                Console.WriteLine($"{kvp.Key}: ${kvp.Value}");
+            }
             Console.ReadKey();
         }
 
         private void BuscarPorFechaLiquidaciones()
         {
             Console.Clear();
+
+            LiquidacionCuotaModeradoraService liquidacionManager = new LiquidacionCuotaModeradoraService();
 
             Console.WriteLine("BUSCAR LIQUIDACIÓN POR FECHA");
 
@@ -170,6 +189,16 @@ namespace UPC__
 
             Console.Write("Ingrese el año: ");
             int año = int.Parse(Console.ReadLine());
+
+            Dictionary<string, decimal> valorTotalCuotasPorAfiliacion = liquidacionManager.CalcularValorTotalCuotasPorAfiliacionEnFecha(año, mes);
+
+            Console.WriteLine($"Valor Total de Cuotas Moderadoras en {mes}/{año}:");
+
+            Console.WriteLine($"Valor Total de Cuotas Moderadoras en {mes}/{año}:");
+            foreach (var kvp in valorTotalCuotasPorAfiliacion)
+            {
+                Console.WriteLine($"{kvp.Key}: ${kvp.Value}");
+            }
 
             Console.ReadKey();
         }
@@ -185,7 +214,9 @@ namespace UPC__
             Console.Write("Ingrese nombre del paciente: ");
             string nombre = Console.ReadLine();
 
+            var liquidacio = liquidacionCuotaModeradoraService.BuscarPorNombre(nombre);
 
+            Console.WriteLine("Nombre -- Id -- NroLiquidacion -- Fecha -- TipoAfiliación -- NroSalarios -- ValorServicio");
 
             Console.ReadKey();
         }
@@ -212,6 +243,18 @@ namespace UPC__
         private void ActualizarServicio()
         {
             Console.Clear();
+
+            LiquidacionCuotaModeradoraService liquidacionService = new LiquidacionCuotaModeradoraService();
+
+            Console.Write("Ingrese el número de liquidación a modificar: ");
+            int numeroLiquidacion = int.Parse(Console.ReadLine());
+
+            Console.Write("Ingrese el nuevo valor del servicio de hospitalización: ");
+            decimal nuevoValorServicio = decimal.Parse(Console.ReadLine());
+
+            liquidacionService.ModificarValorServicioHospitalizacion(numeroLiquidacion, nuevoValorServicio);
+
+            Console.WriteLine("Valor del servicio de hospitalización modificado con éxito.");
 
             Console.ReadKey();
         }
